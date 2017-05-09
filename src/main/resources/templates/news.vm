@@ -1,0 +1,48 @@
+<html>
+<body>
+<pre>
+    Hello vm;
+    ## 你看不到我
+#**
+ * 你看不到我
+ *#
+    value1:$!{value1}
+    $!{value2} ##! 模版语言，如果值不存在，不显示
+    $value3
+    ${value4}
+
+    #foreach($color in $colors)
+        Color $!{foreach.index}/$!{foreach.count}:$!{color}
+    #end
+
+    #foreach($key in $map.keySet())
+        Number $!{foreach.index}/$!{foreach.count}:$!{key} $map.get($key)
+    #end
+
+    #foreach($kv in $map.entrySet())
+        Number $!{foreach.index}/$!{foreach.count}:$!{kv.key} $!{kv.value}
+    #end
+
+    $!{user.name}
+    $!{user.getName()}
+
+    #set($title = "nowcoder")
+    Include: #include("header.vm") <br>
+    Parse: #parse("header.vm");
+
+    #macro(render_color, $color, $index)
+        Color By Macro $index, $color
+    #end
+    #foreach($color in $colors)
+        #render_color($color, $foreach.index)
+    #end
+
+    #set($hello = "hello")
+    #set($hworld1 = "$!{hello} world")  ##双引号能解析出来
+    #set($hworld2 = '$!{hello} world')  ##单引号不能解析
+    hworld1:$hworld1
+    hworld2:$hworld2
+
+</pre>
+</body>
+</html>
