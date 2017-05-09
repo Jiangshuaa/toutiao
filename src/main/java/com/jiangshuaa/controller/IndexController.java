@@ -28,21 +28,21 @@ public class IndexController {
     @Autowired
     private ToutiaoService toutiaoService;
 
-    @RequestMapping(path = {"/", "/index"})
-    @ResponseBody
+    @RequestMapping(path = {"/", "/index"}) // path = value 且可省略，127.0.0.1:8080/
+    @ResponseBody                           //                        127.0.0.1:8080/index 都是主页
     public String index(HttpSession session){
         logger.info("Visit Index");
         return "hello jiangshuaa," + session.getAttribute("msg")
                 + "<br> Say:" + toutiaoService.say();
     }
 
-    @RequestMapping(value = {"/profile/{groupId}/{userId}"})
+    @RequestMapping("/profile/{groupId}/{userId}")
     @ResponseBody
     public String profile(@PathVariable("groupId") String groupId,
                           @PathVariable("userId") int userId,
                           @RequestParam(value = "type",defaultValue = "1") int type,
                           @RequestParam(value = "key", defaultValue = "jiangshuaa") String key){
-        return String.format("GID{%s},UID{%d},TYPE{%d},KEY{%s}", groupId, userId, type, key);
+        return String.format("GID:%s, UID:%d, TYPE:%d, KEY:%s", groupId, userId, type, key);
     }
 
     @RequestMapping(value = {"/vm"})
@@ -54,6 +54,7 @@ public class IndexController {
         for(int i = 0; i < 4; ++i){
             map.put(String.valueOf(i), String.valueOf(i*i));
         }
+
         model.addAttribute("colors", colors);
         model.addAttribute("map", map);
         model.addAttribute("user", new User("Jim"));
@@ -82,10 +83,18 @@ public class IndexController {
             sb.append("<br>");
         }
 
-        sb.append("getMethod:" + request.getMethod() + "<br>");
+        sb.append("getMethod:" + request.getMethod() + "<br>");          //得到客户机请求方式
         sb.append("getPathInfo:" + request.getPathInfo() + "<br>");
-        sb.append("getQueryString:" + request.getQueryString() + "<br>");
-        sb.append("getRequestURI:" + request.getRequestURI() + "<br>");
+        sb.append("getQueryString:" + request.getQueryString() + "<br>");//返回请求行中的参数部分
+        sb.append("getRequestURI:" + request.getRequestURI() + "<br>");  //返回请求行中的资源名部分
+        sb.append("getRequestURL:" + request.getRequestURL() + "<br>");  //客户端发出请求时的完整URL
+        sb.append("getRemoteAddr:" + request.getRemoteAddr() + "<br>");  //返回发出请求的客户机的IP地址
+        sb.append("getRemoteHost:" + request.getRemoteHost() + "<br>");  //返回发出请求的客户机的完整主机名
+        sb.append("getRemotePort:" + request.getRemotePort() + "<br>");  //返回客户机所使用的网络端口号
+        sb.append("getLocalAddr:" + request.getLocalAddr() + "<br>");    //返回WEB服务器的IP地址
+        sb.append("getLocalName:" + request.getLocalName() + "<br>");    //返回WEB服务器的主机名
+        sb.append("getLocalPort:" + request.getLocalPort() + "<br>");    //返回WEB服务器的网络端口号
+        sb.append("getRemoteUser:" + request.getRemoteUser() + "<br>");
 
         return sb.toString();
     }

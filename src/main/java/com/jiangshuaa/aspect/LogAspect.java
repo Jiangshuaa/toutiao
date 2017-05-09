@@ -14,7 +14,7 @@ import java.util.Date;
 /**
  * Created by jiangshuhua on 2017/5/9.
  */
-@Aspect
+@Aspect  // AOP : AOP(面向切面编程)Aspect Oriented Programming
 @Component
 public class LogAspect {
     private static final Logger logger = LoggerFactory.getLogger(LogAspect.class);
